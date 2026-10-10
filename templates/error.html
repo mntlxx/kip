@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="shortcut icon" href="{{ url_for('static', path='img/favicon.png') }}" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ошибка {{ code }} — KIP Control Center</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body {
+            background-color: #2a0f0f;
+            color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+        }
+        .error-card {
+            background-color: #3b1e1e;
+            border: 1px solid #553333;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 480px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .error-img {
+            max-width: 100%;
+            height: auto;
+            max-height: 220px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            object-fit: contain;
+        }
+        h1 { color: #f83838; font-size: 2rem; margin-bottom: 8px; }
+        p { color: #b89494; font-size: 0.95rem; margin-bottom: 24px; line-height: 1.5; }
+        .btn {
+            display: inline-block;
+            background-color: #f83838;
+            color: #2a0f0f;
+            text-decoration: none;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .btn:hover { background-color: #0284c7; color: #fff; }
+    </style>
+</head>
+<body>
+
+<div class="error-card">
+    <img src="{{ image }}" alt="Ошибка {{ code }}" class="error-img">
+    <h1>{{ code }}</h1>
+    <p><strong>{{ title }}</strong></p>
+    <p>{{ message }}</p>
+    <a href="/welcome" class="btn">← Вернуться в меню</a>
+</div>
+
+</body>
+</html>

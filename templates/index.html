@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="shortcut icon" href="{{ url_for('static', path='img/favicon.png') }}" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIP Remote</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <div id="tab-label" class="title">system // loading</div>
+        <div class="header-controls">
+            <button id="btn-config" class="btn-link">[config]</button>
+        </div>
+    </header>
+    <main id="feed" class="feed">
+        <div class="empty-state">loading components...</div>
+    </main>
+    <nav id="tab-nav" class="bottom-nav"></nav>
+    <div id="modal" class="modal" style="display: none;">
+        <div class="modal-content-wrapper">
+            <div class="modal-header">
+                <div id="modal-title" class="title">preferences // user</div>
+                <div class="modal-controls">
+                    <button id="btn-mode-toggle" class="btn-link">[mode: user]</button>
+                    <button id="btn-apply" class="btn-link">[save]</button>
+                    <button id="btn-close" class="btn-link">[close]</button>
+                </div>
+            </div>
+            <div id="view-user-mode" class="modal-body-section">
+                <div id="builder-tabs-list"></div>
+                <button id="btn-add-tab" class="btn-link btn-add">+ [ новая вкладка ]</button>
+            </div>
+            <div id="view-dev-mode" class="modal-body-section" style="display: none;">
+                <div class="section-label">layout configuration (json)</div>
+                <textarea id="layout-json" spellcheck="false"></textarea>
+                
+                <div class="section-label">registered plugins</div>
+                <div id="plugins-list"></div>
+            </div>
+        </div>
+    </div>
+    <div id="picker-modal" class="modal" style="display: none;">
+        <div class="modal-content-wrapper">
+            <div class="modal-header">
+                <div class="title">select action</div>
+                <button id="btn-close-picker" class="btn-link">[close]</button>
+            </div>
+            <div id="picker-content" class="modal-body-section"></div>
+        </div>
+    </div>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

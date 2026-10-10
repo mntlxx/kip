@@ -1,0 +1,59 @@
+{
+  "active_tab": "main",
+  "tabs": [
+    {
+      "id": "main",
+      "title": "главная",
+      "items": [
+        {
+          "plugin": "ControlPCPlugin",
+          "action": "media_control",
+          "label": null,
+          "widget": null
+        },
+        {
+          "plugin": "ControlPCPlugin",
+          "action": "volume",
+          "label": null,
+          "widget": null
+        },
+        {
+          "plugin": "ControlPCPlugin",
+          "action": "power_mode",
+          "label": null,
+          "widget": null
+        },
+        {
+          "plugin": "ControlPCPlugin",
+          "action": "lock_pc",
+          "label": null,
+          "widget": null
+        }
+      ]
+    },
+    {
+      "id": "tab_1791638286443",
+      "title": "Новая вкладка",
+      "items": [
+        {
+          "plugin": "DiscordPlugin",
+          "action": "discord_control",
+          "label": null,
+          "widget": null
+        },
+        {
+          "plugin": "SteamPlugin",
+          "action": "run_game",
+          "label": null,
+          "widget": null
+        },
+        {
+          "plugin": "ControlPCPlugin",
+          "action": "power_mode",
+          "label": null,
+          "widget": null
+        }
+      ]
+    }
+  ]
+}

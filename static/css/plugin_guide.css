@@ -1,0 +1,192 @@
+:root {
+    --bg: #000000;
+    --card-bg: #181818;
+    --card-border: #292929;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --text-active: #ffffff;
+    --border: #2f3236;
+    --accent: #e6e6e6;
+    --font-sans: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-mono: "SF Mono", "Cascadia Code", "JetBrains Mono", Consolas, monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-sans);
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text-main);
+    padding: 40px 20px 80px 20px;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+/* Главная карточка-контейнер руководства */
+.plugin-guide-container {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 750px;
+    width: 100%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    line-height: 1.6;
+}
+
+/* Типографика */
+.plugin-guide-container h2 {
+    color: var(--text-active);
+    font-size: 1.7rem;
+    margin-bottom: 16px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    border-bottom: 1px solid var(--card-border);
+    padding-bottom: 16px;
+}
+
+.plugin-guide-container h3 {
+    color: var(--text-active);
+    font-size: 1.2rem;
+    margin: 32px 0 12px 0;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.plugin-guide-container p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+}
+
+.plugin-guide-container code {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-main);
+    background: #121212;
+    padding: 3px 7px;
+    border-radius: 6px;
+    border: 1px solid var(--card-border);
+}
+
+.btn-link {
+    background: var(--card-bg);
+    color: var(--text-active);
+    border: 1px solid var(--card-border);
+    padding: 6px 12px;
+    border-radius: 8px;
+}
+
+/* Блоки кода */
+.guide-code-block {
+    position: relative;
+    background: #121212;
+    border: 1px solid var(--card-border);
+    padding: 20px;
+    border-radius: 12px;
+    overflow-x: auto;
+    margin: 16px 0 24px 0;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.guide-code-block code {
+    color: #4ade80; /* Сочный приятный зеленый для синтаксиса кода */
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+/* Кнопка копирования кода внутри блоков */
+.guide-code-block .btn-copy {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--card-border);
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.guide-code-block .btn-copy:hover {
+    color: var(--text-active);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #444;
+}
+
+/* Список виджетов */
+.guide-widgets-list {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 16px 0 24px 0;
+}
+
+.guide-widget-item {
+    background: #121212;
+    border: 1px solid var(--card-border);
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    transition: border-color 0.2s;
+}
+
+.guide-widget-item:hover {
+    border-color: #444;
+}
+
+.guide-widget-item strong {
+    color: var(--text-active);
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+}
+
+/* Блок предупреждений и советов */
+.guide-alert-box {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--card-border);
+    border-left: 4px solid var(--text-active);
+    padding: 18px 22px;
+    border-radius: 0 12px 12px 0;
+    margin-top: 24px;
+}
+
+.guide-alert-box p {
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+.guide-alert-box b {
+    color: var(--text-main);
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+    .plugin-guide-container {
+        padding: 20px;
+        border: none;
+        background: transparent;
+        box-shadow: none;
+    }
+}

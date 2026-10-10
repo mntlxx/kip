@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="shortcut icon" href="{{ url_for('static', path='img/favicon.png') }}" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIP Control Center — Настройка</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="/static/css/welcome.css">
+</head>
+<body>
+
+<div class="wizard-card">
+    <div class="step active" id="step-1">
+        <h1>👋 KIP Control Center</h1>
+        <p>Привет, спасибо, что решили попробовать KIP Control Center!</p>
+        <p style="color: #f87171; font-weight: bold;">ВНИМАНИЕ! Вы установили альфа-версию. В ней могут быть ошибки и недоработки.</p><p>Версия Kip: 0.1a</p>
+        <div style="text-align: right;">
+            <button class="btn" onclick="goToStep(2)">Начать настройку →</button>
+        </div>
+    </div>
+    <div class="step" id="step-2">
+        <h2>📡 Сетевое подключение</h2>
+        <p>Ничего сложного: просто выберите нужный сетевой интерфейс для доступа с других устройств.</p>
+        <span class="tooltip-wrapper">Я ничего не понял, помоги
+            <span class="tooltip-box">Если просто: выберите тот, который называется Ethernet. Если их несколько, выберите первый. Либо оставьте по умолчанию.</span>
+        </span>
+
+        <div class="network-grid">
+            <div>
+                <div class="qr-container">
+                    <div id="qr-preview"></div>
+                </div>
+                <div class="qr-url" id="qr-url-text">http://...</div>
+            </div>
+
+            <div class="select-box">
+                <label style="font-size:0.85rem; color:#94a3b8;">Интерфейсы ПК:</label>
+                <select id="iface-select" onchange="onIfaceChange()"></select>
+                <button class="btn btn-secondary btn-block" onclick="saveIp()">📌 Зафиксировать IP</button>
+                <div class="status-msg" id="save-msg">✓ Сохранено в network_config.json</div>
+            </div>
+        </div>
+
+        <div class="nav-buttons">
+            <button class="btn btn-secondary" onclick="goToStep(1)">← Назад</button>
+            <button class="btn" onclick="goToStep(3)">Далее: Документация →</button>
+        </div>
+    </div>
+    <div class="step" id="step-3">
+        <h2>📖 Мануал и документация</h2>
+        <p>Полезные материалы и инструкции для тонкой настройки и разработки:</p>
+
+        <div class="docs-container" style="max-height: 250px; overflow-y: auto; padding-right: 5px; margin-bottom: 20px;">
+            <div style="margin-bottom: 14px;">
+                <strong style="color: #f8fafc; font-size: 0.9rem;">📦 Где взять стартовый пак плагинов?</strong>
+                <p style="margin: 4px 0 0 0; font-size: 0.85rem;">Стандартные плагины уже встроены в проект. Наслаждайтесь!</p>
+            </div>
+
+            <div style="margin-bottom: 14px;">
+                <strong style="color: #f8fafc; font-size: 0.9rem;">🧩 Как написать свой плагин? (Для экспертов)</strong>
+                <p style="margin: 4px 0 0 0; font-size: 0.85rem;">Подробно об этом можно ознакомиться <a href="http://127.0.0.1:8008/guide/plugins" target="_blank" style="color: #38bdf8; text-decoration: underline;">тут</a>.</p>
+            </div>
+
+            <div style="margin-bottom: 14px;">
+                <strong style="color: #f8fafc; font-size: 0.9rem;">💡 Где взять приложение для телефона?</strong>
+                <p style="margin: 4px 0 0 0; font-size: 0.85rem;">
+                    Самого приложения на Android и iOS нет. Но чтобы сделать подключение максимально удобным, можно добавить ярлык на главный экран телефона. Тогда Kip будет работать как отдельное приложение.
+                    <ul style="margin: 4px 0 0 20px; font-size: 0.85rem;">
+                    Для iOS:
+                        <li>Подключитесь к той же Wi-Fi сети, что и компьютер</li>
+                        <li>Введите IP-адрес в Safari или отсканируйте QR-код</li>
+                        <li>Нажмите "Поделиться" → "На экран Домой"</li>
+                    </ul>
+
+                    <ul style="margin: 4px 0 0 20px; font-size: 0.85rem;">
+                    Для Android:
+                        <li>Подключитесь к той же Wi-Fi сети, что и компьютер</li>
+                        <li>Введите IP-адрес или отсканируйте QR-код. Используйте браузер Chrome по возможности.</li>
+                        <li>Нажмите "Добавить на главный экран"</li>
+                    </ul>
+                </p>
+            </div>
+
+            <div>
+                <strong style="color: #38bdf8; font-size: 0.9rem;">Ну и самое главное</strong>
+                <p style="margin: 4px 0 0 0; font-size: 0.85rem;">Не бойтесь экспериментировать! Для этого проект и создан. Хорошего пользования!</p>
+            </div>
+        </div>
+
+        <div class="nav-buttons">
+            <button class="btn btn-secondary" onclick="goToStep(2)">← Назад</button>
+            <button class="btn" onclick="finishSetup()">Завершить →</button>
+        </div>
+    </div>
+    <div class="step" id="step-4" style="text-align: center;">
+        <h1>🎉 Все готово!</h1>
+        <p>Всякое может быть, так что держите еще раз QR-код для быстрого подключения :3</p>
+
+        <div class="qr-container" style="display:inline-block; margin: 10px 0 20px 0;">
+            <div id="final-qr"></div>
+        </div>
+        <div>
+            <button class="btn" onclick="window.finishAndReload()">Закончить настройку</button>
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/welcome.js"></script>
+</body>
+</html>

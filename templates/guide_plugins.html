@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="shortcut icon" href="{{ url_for('static', path='img/favicon.png') }}" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIP Control Center — Руководство по плагинам</title>
+    <link rel="stylesheet" href="/static/css/plugin_guide.css">
+</head>
+<body>
+
+    <div class="plugin-guide-container">
+        <h2>⚙ Руководство по разработке плагинов</h2>
+        <p>Архитектура KIP построена на code-first подходе с использованием легковесного SDK. Каждый плагин — это автономный модуль Python, который автоматически регистрирует свои методы и интерфейс в системе.</p>
+
+        <h3>1. Базовая структура плагина</h3>
+        <p>Создайте новый файл (например, <code>my_plugin.py</code>) в папке <code>plugins/</code>. Минимальный рабочий шаблон:</p>
+        
+        <pre class="guide-code-block"><code>from core.sdk import BasePlugin, action
+
+class MyCustomPlugin(BasePlugin):
+    INFO = {
+        "id": "MyCustomPlugin",
+        "name": "Мой плагин",
+        "version": "1.0.0",
+        "author": "Kip",
+        "description": "Описание вашего плагина"
+    }
+
+    @action(name="hello_action", label="Сказать привет", widget="button")
+    def hello_action(self):
+        print("Привет из плагина!")
+        return "OK"
+</code></pre>
+
+        <h3>2. Все типы поддерживаемых виджетов</h3>
+        <p>В параметре <code>widget</code> декоратора <code>@action</code> можно указать один из встроенных компонентов интерфейса:</p>
+        
+        <ul class="guide-widgets-list">
+            <li class="guide-widget-item"><strong>"button"</strong> — Обычная интерактивная кнопка действия.</li>
+            <li class="guide-widget-item"><strong>"buttons-group"</strong> — Панель из нескольких кнопок внутри одной функции (через <code>props</code>).</li>
+            <li class="guide-widget-item"><strong>"slider"</strong> — Ползунок для числовых значений (громкость, яркость).</li>
+            <li class="guide-widget-item"><strong>"select"</strong> — Выпадающий список вариантов (выбор профиля, игры или режима).</li>
+        </ul>
+
+        <h3>3. Примеры продвинутых виджетов</h3>
+        <p>Рассмотрим реализацию сложных компонентов, которые мы используем в системных плагинах:</p>
+
+        <p style="margin-top: 16px;"><b>Кнопка:</b></p>
+        <pre class="guide-code-block"><code>    @action(
+            name="название", 
+            label="Отображаемое название", 
+            widget="button"
+    )
+    def hello_action(self):
+        # Ваш код
+        return "OK"
+</code></pre>
+
+        <p style="margin-top: 16px;"><b>Панель кнопок (buttons-group):</b></p>
+        <pre class="guide-code-block"><code>    @action(
+        name="название",
+        label="Отображаемое название",
+        widget="buttons-group",
+        props={
+            "buttons": [
+                {"label": "Текст на кнопке", "value": "значение для передачи в метод"},
+                {"label": "Еще кнопка", "value": "другое значение"},
+                {"label": "И так далее сколько угодно", "value": "тут не забываем значение"}
+            ]
+        }
+    )
+    def media_control(self, value: str = "значение для привязки кнопки"):
+        # Ваш код
+        return "OK"
+</code></pre>
+
+        <p style="margin-top: 16px;"><b>Выпадающий список (select):</b></p>
+        <pre class="guide-code-block"><code>    @action(
+        name="название действия внутри плагина",
+        label="Отображаемое название",
+        widget="select",
+        props={
+            "options": [
+                {"value": "значение параметра", "label": "Название параметра"},
+                {"value": "значение параметра", "label": "Название параметра"},
+                # и так далее
+            ],
+            "default": "тут значение по умолчанию."
+        }
+    )
+    def launch_game(self, value: str = "само значение"):
+        # ваш код
+        return "OK"
+</code></pre>
+
+        <p style="margin-top: 16px;"><b>Слайдер (slider):</b></p>
+        <pre class="guide-code-block"><code>    @action(
+        name="название",
+        label="Отображаемое название",
+        widget="slider",
+        props={"min": 0, "max": 100, "step": 1, "default": 50} # Тут получается работает так: минимальное значение: 0, максимальное: 100, шаг: 1, и значение по умолчанию: 50
+    )
+    def set_volume(self, value: str = "Указываем значение по умолчанию"):
+        vol_level = int(float(value))
+        return f"Значение со слайдера: {vol_level}."
+</code></pre>
+
+        <p>В общем если говорить коротко, то виджеты имеют почти одинаковую структуру, отличие только в параметрах и поведении. Важно еще сказать, что Kip работает тут только как мост между плагинами и пользовательским интерфейсом и свою задачу он старается выполнять, ну а вам надо просто реализовать логику внутри плагина — всю рутину по рендерингу и пробросу событий система берет на себя.</p>
+
+        <h3>💡 Важные советы разработчикам</h3>
+        <div class="guide-alert-box">
+            <p>
+                • <b>Автозагрузка:</b> Все файлы плагинов сканируются динамически при старте.<br>
+                • <b>Горячая перезагрузка:</b> После правок кода вызывайте эндпоинт <code>/api/reload</code>.<br>
+                • <b>Изоляция:</b> Ошибки в плагинах перехватываются бэкендом и не валят приложение.
+            </p>
+        </div>
+    </div>
+
+    <script src="/static/js/plugin_guide.js"></script>
+</body>
+</html>
